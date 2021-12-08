@@ -1,11 +1,67 @@
+import React, { useState } from "react";
+//imrs
 import AuthLayout from "../../componenrs/layouts/auth/AuthLayout";
 import { Link } from "react-router-dom";
+// ES6 Modules or TypeScript
+import Swal from "sweetalert2";
 
 const Login = () => {
-  document.title = "Login"
+  // สร้างตัวแปรแบบ State ไว้รับค่าจากฟอร์ม
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  // Fucntion Submit Form
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // log data from state
+    console.log(username, password);
+
+    if (username === "admin" && password === "1234") {
+      // alert("Login Success");
+      let timerInterval;
+      Swal.fire({
+        html: "กำลังเข้าสู่ระบบ <b></b>",
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+
+          timerInterval = setInterval(() => {
+            const content = Swal.getContent();
+            if (content) {
+              const b = Swal.getHtmlContainer().querySelector("b");
+              if (b) {
+                b.textContent = Swal.getTimerLeft();
+              }
+            }
+          }, 2000);
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        },
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log("I was closed by the timer");
+        }
+      });
+    } else {
+      // alert("Login Fail");
+      Swal.fire({
+        title: "มีข้อผิดพลาด!",
+        text: "ข้อมูลเข้าระบบไม่ถูกต้อง",
+        icon: "error",
+        confirmButtonText: "ลองใหม่อีกครั้ง",
+        allowOutsideClick: false,
+        allowEscapeKey: true,
+      });
+    }
+  };
+
   return (
     <AuthLayout title="Login">
-      <form className="card p-4 col-md-4 my-form">
+      <form className="card p-4 col-md-4 my-form" onSubmit={handleSubmit}>
         <h3 className="text-center mb-4">เข้าสู่ระบบ</h3>
 
         <div className="mb-3 row">
@@ -18,6 +74,8 @@ const Login = () => {
               className="form-control"
               id="username"
               name="username"
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
               required
             />
           </div>
@@ -33,6 +91,8 @@ const Login = () => {
               className="form-control"
               id="password"
               name="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
               required
             />
           </div>
