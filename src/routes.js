@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import Dashboard from "./pages/backend/dashboard/Dashboard";
 import Forgotpassword from "./pages/forgotpassword/Forgotpassword";
 import Login from "./pages/login/Login";
 import PageNotFound from "./pages/pagenotfound/PageNotFound";
@@ -15,6 +16,7 @@ const Mainroutes = () => {
       <Route path="*" element={<PageNotFound />} />
       {/* 404NotFound : https://ui.dev/react-router-handling-404-pages/ */}
       {/* Backend */}
+      <Route path="/backend/dashboard" exect={true} element={<Dashboard />} />
       {/* <Route path="/" exect={true} element={} /> */}
     </Routes>
   );
