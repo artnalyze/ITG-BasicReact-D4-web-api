@@ -1,5 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { NavLink, useNavigate } from "react-router-dom";
 const Navbar = () => {
+  let fullname = localStorage.getItem("fullname");
+
+  let navigate = useNavigate();
+
+  const Logout = () => {
+    localStorage.removeItem("fullname");
+    navigate("/login");
+  };
+
   return (
     <nav className="navbar navbar-expand navbar-light navbar-bg">
       <a className="sidebar-toggle d-flex">
@@ -215,29 +225,29 @@ const Navbar = () => {
               <img
                 src="../assets/img/avatars/avatar.jpg"
                 className="avatar img-fluid rounded mr-1"
-                alt="Charles Hall"
-              />{" "}
-              <span className="text-dark">Charles Hall</span>
+                alt={fullname}
+              />
+              <span className="text-dark">{fullname}</span>
             </a>
             <div className="dropdown-menu dropdown-menu-right">
               <a className="dropdown-item" href="pages-profile.html">
                 <i className="align-middle mr-1" data-feather="user" /> Profile
               </a>
               <a className="dropdown-item" href="#">
-                <i className="align-middle mr-1" data-feather="pie-chart" />{" "}
+                <i className="align-middle mr-1" data-feather="pie-chart" />
                 Analytics
               </a>
               <div className="dropdown-divider" />
               <a className="dropdown-item" href="pages-settings.html">
-                <i className="align-middle mr-1" data-feather="settings" />{" "}
+                <i className="align-middle mr-1" data-feather="settings" />
                 Settings &amp; Privacy
               </a>
               <a className="dropdown-item" href="#">
-                <i className="align-middle mr-1" data-feather="help-circle" />{" "}
+                <i className="align-middle mr-1" data-feather="help-circle" />
                 Help Center
               </a>
               <div className="dropdown-divider" />
-              <a className="dropdown-item" href="#">
+              <a className="dropdown-item" href="#" onClick={Logout}>
                 Log out
               </a>
             </div>

@@ -1,14 +1,24 @@
 import React, { useState } from "react";
 //imrs
 import AuthLayout from "../../componenrs/layouts/auth/AuthLayout";
-import { Link } from "react-router-dom";
-// ES6 Modules or TypeScript
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+
+// change useHistory to useNavigate
+// ref : https://pretagteam.com/question/usehistory-is-not-exported-form-reactrouterdom
 
 const Login = () => {
   // สร้างตัวแปรแบบ State ไว้รับค่าจากฟอร์ม
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  // create variable for change page
+  let navigate = useNavigate();
+
+  // check if login exists sendto dashboard
+  if (localStorage.getItem("fullname") != null) {
+    navigate("/backend/dashboard");
+  }
 
   // Fucntion Submit Form
   const handleSubmit = (e) => {
@@ -44,6 +54,10 @@ const Login = () => {
         /* Read more about handling dismissals below */
         if (result.dismiss === Swal.DismissReason.timer) {
           console.log("I was closed by the timer");
+          navigate("/backend/dashboard");
+
+          // keep username to localStorage
+          localStorage.setItem("fullname", "Artdvp");
         }
       });
     } else {
