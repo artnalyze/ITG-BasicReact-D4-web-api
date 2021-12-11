@@ -2,3 +2,8 @@
 body {
     font-family: 'Prompt', sans-serif !important;
 }
+
+.error {
+    color: red;
+    margin-top: 5px;
+}

@@ -1,11 +1,25 @@
 import AuthLayout from "../../componenrs/layouts/auth/AuthLayout";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
-  return <AuthLayout title="Register">
-    <form className="card p-4 col-md-4 my-form" >
-        <h3 className="text-center mb-4">ลงทะเบียน</h3>
+  // การเรียกใช้งาน react-hook-form
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
+  // สร้าง Function มารับข้อมูลจาก React Hook form มาใช้
+  const registerSubmit = (data, e) => {
+    console.log(data);
+  }
+
+  return (
+    <AuthLayout title="Register">
+      <form className="card p-4 col-md-4 my-form" onSubmit={handleSubmit(registerSubmit)}>
+        <h3 className="text-center mb-4">ลงทะเบียน</h3>
         <div className="mb-3 row">
           <label htmlFor="fullname" className="col-md-4 col-form-label">
             ชื่อ-สกุล
@@ -16,9 +30,9 @@ const Register = () => {
               className="form-control"
               id="fullname"
               name="fullname"
-              
+              {...register("fullname", { required: true })}
             />
-    
+            {errors.fullname && <p className="error">กรุณาป้อนชื่อก่อน</p>}
           </div>
         </div>
 
@@ -32,9 +46,9 @@ const Register = () => {
               className="form-control"
               id="email"
               name="email"
-    
+              {...register("email", { required: true })}
             />
-          
+            {errors.email && <p className="error">กรุณาป้อนอีเมล์ก่อน</p>}
           </div>
         </div>
 
@@ -48,9 +62,9 @@ const Register = () => {
               className="form-control"
               id="username"
               name="username"
-            
+              {...register("username", { required: true })}
             />
-       
+            {errors.username && <p className="error">กรุณาป้อนชื่อผู้ใช้ก่อน</p>}
           </div>
         </div>
 
@@ -64,9 +78,9 @@ const Register = () => {
               className="form-control"
               id="password"
               name="password"
-             
+              {...register("password", { required: true })}
             />
-          
+            {errors.password && <p className="error">กรุณาป้อนรหัสผ่านก่อน</p>}
           </div>
         </div>
 
@@ -87,7 +101,6 @@ const Register = () => {
               name="Reset"
               id="reset"
               value="ล้างข้อมูล"
-              
             />
           </div>
         </div>
@@ -99,7 +112,8 @@ const Register = () => {
           </div>
         </div>
       </form>
-  </AuthLayout>;
+    </AuthLayout>
+  );
 };
 
 export default Register;
