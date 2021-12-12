@@ -1,7 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import BackendLayout from "../../../componenrs/layouts/backend/BackendLayout";
+import api from "../../../services/productAPI";
+import { useState, useEffect } from "react";
+//==========================================================================
+// ส่วนของการอ่านข้อมูลจาก API
+//==========================================================================
+// สร้างตัวแปรมารับข้อมูลที่อ่านจาก API
 
 const Product = () => {
+  const [products, setproducts] = useState([]);
+
+  useEffect(() => {
+    api.getAllProduct().then((res) => {
+      console.log(res.data);
+      setproducts(res.data);
+    });
+  }, []);
+
   return (
     <BackendLayout title="Dashboard">
       <div>
@@ -22,20 +37,23 @@ const Product = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>
-                        xxx
-                      </td>
-                      <td>Samsung</td>
-                      <td>2020202020202020</td>
-                      <td>200000</td>
-                      <td>20/10/2021</td>
-                      <td className="text-right" style={{width: '200px'}}>
-                          <a href="#" className="btn btn-sm btn-warning">Edit</a>
-                          <a href="#" className="btn btn-sm btn-danger">Delete</a>
-                      </td>
-                    </tr>
-                   
+                    {products.map((product, index) => (
+                      <tr key={index}>
+                        <td><img src={product.product_image} height="50" alt="" /></td>
+                        <td>{product.product_name}</td>
+                        <td>{product.product_barcode}</td>
+                        <td>{product.product_price}</td>
+                        <td>{product.product_date}</td>
+                        <td className="text-right" style={{ width: "200px" }}>
+                          <a href="#" className="btn btn-sm btn-warning">
+                            Edit
+                          </a>
+                          <a href="#" className="btn btn-sm btn-danger">
+                            Delete
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
