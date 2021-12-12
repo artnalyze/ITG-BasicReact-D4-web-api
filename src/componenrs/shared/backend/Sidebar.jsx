@@ -2,6 +2,11 @@ import { NavLink } from "react-router-dom";
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 const Sidebar = () => {
+  let activeStyle = {
+    fontWeight: "bold",
+    color: "white",
+  };
+
   return (
     <nav id="sidebar" className="sidebar">
       <div className="sidebar-content js-simplebar">
@@ -14,10 +19,7 @@ const Sidebar = () => {
             <NavLink
               to="/backend/dashboard"
               className="sidebar-link"
-              activeStyle={{
-                fontWeight: "bold",
-                color: "red",
-              }}
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
             >
               <i className="align-middle" data-feather="sliders" />
               &nbsp;
@@ -42,10 +44,7 @@ const Sidebar = () => {
                 <NavLink
                   to="/backend/product"
                   className="sidebar-link"
-                  activeStyle={{
-                    fontWeight: "bold",
-                    color: "red",
-                  }}
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
                 >
                   Product
                 </NavLink>
